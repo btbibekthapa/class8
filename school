@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Bibek's Quiz</title>
+</head>
+<script>
+// questions.js
+const questions = [
+    {
+        question: "What is the capital of France?",
+        options: ["Paris", "Berlin", "Rome", "Madrid"],
+        correctAnswer: "Paris"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Venus", "Jupiter"],
+        correctAnswer: "Mars"
+    },
+    {
+        question: "What is the largest mammal?",
+        options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+        correctAnswer: "Blue Whale"
+    },
+    {
+        question: "Who wrote 'Romeo and Juliet'?",
+        options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+        correctAnswer: "William Shakespeare"
+    },
+    {
+        question: "What is the capital of Japan?",
+        options: ["Seoul", "Beijing", "Tokyo", "Bangkok"],
+        correctAnswer: "Tokyo"
+    }
+];
+// quiz.js
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+    const questionContainer = document.getElementById("quiz");
+    const currentQuestionData = questions[currentQuestion];
+
+    let optionsHtml = "";
+    currentQuestionData.options.forEach(option => {
+        optionsHtml += `<label><input type="radio" name="quiz" value="${option}">${option}</label><br>`;
+    });
+
+    questionContainer.innerHTML = `<h2>${currentQuestionData.question}</h2>${optionsHtml}`;
+}
+
+function submitQuiz() {
+    const selectedOption = document.querySelector("input[name='quiz']:checked");
+    
+    if (selectedOption) {
+        if (selectedOption.value === questions[currentQuestion].correctAnswer) {
+            score++;
+        }
+
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResults();
+        }
+    }
+}
+
+function showResults() {
+    const quizContainer = document.getElementById("quiz");
+    const resultsContainer = document.getElementById("results");
+
+    quizContainer.innerHTML = ""; // Clear the quiz container
+    resultsContainer.innerHTML = `<p>Your Score: ${score} out of ${questions.length}</p>`;
+}
+
+// Load the first question on page load
+window.onload = loadQuestion;
+
+
+</script>
+<body>
+    <div class="quiz-container">
+        <h1>Bibek's Quiz</h1>
+        <div id="quiz"></div>
+        <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+        <div id="results"></div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="quiz.js"></script>
+</body>
+<style>body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.quiz-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#results {
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
+</html>
